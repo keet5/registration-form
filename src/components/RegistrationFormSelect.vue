@@ -1,24 +1,9 @@
 <template>
     <label>
         {{ title }}
-        <div class="wrapper">
-            <select
-                :multiple="true"
-                @change="
-                    $emit(
-                        'input',
-                        [].filter
-                            .call(
-                                $event.target.options,
-                                (option) => option.selected
-                            )
-                            .map((option) => option.value)
-                    )
-                "
-            >
-                <option v-for="(v, n) of values" :key="n">{{ v }}</option>
-            </select>
-        </div>
+        <select v-model="model" v-bind="$attrs">
+            <option v-for="(v, n) of values" :key="n">{{ v }}</option>
+        </select>
     </label>
 </template>
 
@@ -26,18 +11,29 @@
 export default {
     nama: "RegistrationFromInputText",
     props: ["value", "title", "values"],
+    computed: {
+        model: {
+            get() {
+                return this.value;
+            },
+
+            set(value) {
+                this.$emit("input", value);
+            },
+        },
+    },
 };
 </script>
 
 <style lang="sass" scoped>
 select
-.wrapper
-    display: inline-block
-    vertical-align: top
-    overflow: hidden
-    border: solid grey 1px
+// .wrapper
+//     display: inline-block
+//     vertical-align: top
+//     overflow: hidden
+//     border: solid grey 1px
 
-    select
-        padding: 10px
-        margin: -5px -20px -5px -5px
+//     select
+//         padding: 10px
+//         margin: -5px -20px -5px -5px
 </style>
