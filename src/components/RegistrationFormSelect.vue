@@ -1,16 +1,19 @@
 <template>
-    <label>
-        {{ title }}
+    <Label :title="title" :$v="$v">
         <select v-model="model" v-bind="$attrs">
             <option v-for="(v, n) of values" :key="n">{{ v }}</option>
         </select>
-    </label>
+    </Label>
 </template>
 
 <script>
+import RegistrationFormInput from "./RegistrationFormLabel.vue";
 export default {
+    components: {
+        Label: RegistrationFormInput,
+    },
     nama: "RegistrationFromInputText",
-    props: ["value", "title", "values"],
+    props: ["value", "title", "values", "$v"],
     computed: {
         model: {
             get() {

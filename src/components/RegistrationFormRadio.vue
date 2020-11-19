@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <Label :title="title">
         <label v-for="(v, n) of values" :key="n">
             {{ v }}
             <input
@@ -9,11 +9,13 @@
                 @change="$emit('input', $event.target.value)"
             />
         </label>
-    </div>
+    </Label>
 </template>
 
 <script>
+import Label from "./RegistrationFormLabel.vue";
 export default {
+    components: { Label },
     nama: "RegistrationFromInputRadio",
     props: ["value", "title", "values", "name"],
 };

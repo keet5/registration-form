@@ -1,37 +1,29 @@
 <template>
-    <label>
-        {{ title }}
+    <Label :title="title" :$v="$v">
         <input
             @input="$emit('input', $event.target.value)"
             v-bind="$attrs"
             @blur="touch"
+            :value="value"
         />
-        <template v-if="$v && $v.$error">
-            <p v-for="({ name }, n) of $v.$flattenParams()" :key="n" v-show="!$v[name]">
-                {{ map[name] }}
-            </p>
-        </template>
-    </label>
+    </Label>
 </template>
 
 <script>
+import RegistrationFormInput from "./RegistrationFormLabel.vue";
 export default {
-    nama: "RegistrationFormInput",
-    props: ["value", "title", "$v"],
-    data() {
-        return {
-            map: {
-                required: 'Обязательное поле',
-                // minLength:  `Поле должно содержать как минимум ${this.$v && this.$v.$params.minLength && this.$v.$params.minLength.min } символа`
-            },
-        };
+    components: {
+        Label: RegistrationFormInput,
     },
+    name: "RegistrationFormInput",
+    props: ["value", "title", "$v"],
+ 
     methods: {
         touch() {
             if (this.$v) {
                 this.$v.$touch();
             }
         },
-    }
+    },
 };
 </script>

@@ -10,7 +10,12 @@
                 type="date"
                 :$v="$v.birthday"
             />
-            <Input v-model="phone" title="Телефон" />
+            <Input
+                v-model="phone"
+                title="Телефон"
+                :$v="$v.phone"
+                @input="phoneParse"
+            />
             <Radio
                 v-model="gender"
                 title="Пол"
@@ -19,8 +24,9 @@
             />
             <Select
                 v-model="group"
-                title="Группа клиентов*"
+                s.itle="Группа клиентов*"
                 :values="['VIP', 'Проблемные', 'ОМС']"
+                :$v="$v.group"
                 multiple
             />
             <Checkbox v-model="noSMS" title="Не отправлять СМС" />
@@ -38,7 +44,7 @@
         <fieldset>
             <Select
                 v-model="document"
-                title="Индекс"
+                title="Тип документа"
                 :values="[
                     'Пасспорт',
                     'Свидетельство о рождении',
@@ -56,6 +62,9 @@
             />
         </fieldset>
         <fieldset>
+            <p>*Поле обязательноя для заполнения</p>
+        </fieldset>
+        <fieldset>
             <button type="submit">Регистрация</button>
         </fieldset>
     </form>
@@ -66,6 +75,7 @@ import RegistrationFormRadio from "./RegistrationFormRadio.vue";
 import RegistrationFormSelect from "./RegistrationFormSelect.vue";
 import RegistrationFormCheckbox from "./RegistrationFormCheckbox.vue";
 import RegistrationFormInput from "./RegistrationFormInput.vue";
+import RegistrationFromLabel from "./RegistrationFormLabel.vue";
 
 import { required, minLength } from "vuelidate/lib/validators";
 export default {
@@ -74,6 +84,7 @@ export default {
         Select: RegistrationFormSelect,
         Checkbox: RegistrationFormCheckbox,
         Input: RegistrationFormInput,
+        Label: RegistrationFromLabel,
     },
     name: "RegistrationForm",
     data() {
@@ -111,6 +122,9 @@ export default {
         birthday: {
             required,
         },
+        phone: {
+            required,
+        },
         group: {
             required,
         },
@@ -125,7 +139,12 @@ export default {
     methods: {
         check(event) {
             this.$v.$touch();
-            console.log(this.$v.lastName.$flattenParams().map((i) => i.name));
+        },
+        phoneParse(value) {
+            this.phone = value
+                .replace(/[^\d]/g, "")
+                .replace(/^(7)?(\d{0,10})/, (_, p1, p2) => p2 && '7' + p2 || p1 || '')
+                .slice(0, 11)                
         },
     },
 };
@@ -139,5 +158,5 @@ export default {
     background-color: yellowgreen
     display: grid
 fieldset
-    display: grid
+    // display: grid
 </style>
