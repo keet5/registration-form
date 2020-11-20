@@ -1,5 +1,5 @@
 <template>
-    <Label :title="title">
+    <Label class="label-container" :title="title">
         <label v-for="(v, n) of values" :key="n">
             {{ v }}
             <input
@@ -20,3 +20,11 @@ export default {
     props: ["value", "title", "values", "name"],
 };
 </script>
+
+<style lang="sass" scoped>
+.label-container
+    display: flex
+    justify-content: space-between
+    align-items: center
+    margin-bottom: 15px
+</style>

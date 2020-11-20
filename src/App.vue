@@ -1,6 +1,9 @@
 <template>
     <div id="app">
-        <RegistrationForm />
+        <div class="success-window" v-if="success">
+            <h1>Регистрация прошла успешно</h1>
+        </div>
+        <RegistrationForm v-else v-model="success"/>
     </div>
 </template>
 
@@ -12,15 +15,24 @@ export default {
     components: {
         RegistrationForm,
     },
+    data() {
+        return {
+            success: false
+        }    
+    },
+
+    watch: {
+        success() {
+            console.log('success')
+        }
+    }
 };
 </script>
 
 <style lang="sass">
 #app
     font-family: Avenir, Helvetica, Arial, sans-serif
-    -webkit-font-smoothing: antialiased
-    -moz-osx-font-smoothing: grayscale
-    text-align: center
-    color: #2c3e50
-    margin-top: 60px
+    .success-window
+        margin: 100px
+        text-align: center
 </style>

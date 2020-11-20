@@ -1,5 +1,5 @@
-// module.exports = {
-//     configureWebpack: {
-//         devtool: 'source-map'
-//     }
-// }
+module.exports = {
+    publicPath: process.env.NODE_ENV === 'production'
+        ? '/registration-form/'
+        : '/'
+}

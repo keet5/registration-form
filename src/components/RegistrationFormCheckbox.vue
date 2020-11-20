@@ -1,6 +1,6 @@
 <template>
     <label>
-        {{ title }}
+        <span>{{ title }}</span>
         <input type="checkbox" :checked="value" @input="$emit('input', $event.target.checked)">
     </label>
 </template>
@@ -11,3 +11,9 @@ export default {
     props: ['value', 'title']
 }
 </script>
+
+<style lang="sass" scoped>
+label
+    display: grid
+    grid-template-columns: auto auto
+</style>
